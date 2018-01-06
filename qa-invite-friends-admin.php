@@ -4,6 +4,19 @@ Setting up the admin page options.
 */
 class qa_invite_friends_admin
 {
+  function option_default($option) {
+
+    switch($option) {
+      case 'inf_subject':
+        return '0';
+      case 'inf_message_body':
+        return 'Facebook Friends Invitation';
+      default:
+        return null;
+    }
+    
+  }
+
   function admin_form(&$qa_content)
   {
     $saved=false;
@@ -31,7 +44,7 @@ class qa_invite_friends_admin
         array(
           'label' => 'Preview:<br />',
           'type'  => 'static',
-          'value' => 'Subject: '. qa_html(qa_opt('inf_subject')) . '<br />Message:<br />'.qa_opt('inf_message_body') ,
+          'value' => '<b>Subject: </b>'. qa_html(qa_opt('inf_subject')) . '<br /><b>Message:</b><br />'.qa_opt('inf_message_body').'<hr />' ,
         ),
       ),
 
