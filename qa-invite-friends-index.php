@@ -29,34 +29,33 @@ class qa_invite_friends_index_page {
 
 		$qa_content = qa_content_prepare();
 		
-		if (!isset($_POST["submit"])){
-			$qa_content['form_profile']=array(
-				'title' => 'Invite your friends',
-				'tags' => 'ENCTYPE="multipart/form-data" method="POST" ACTION="'.qa_self_html().'" CLASS="pp-invite-friends"',
-				'style' => 'wide',
-				'fields' => array(
-					'emails' => array(
-						'label' => 'Friend\'s Emails:',
-						'tags' => 'name="emails"',
-						'type' => 'text',
-						'note' => 'Enter comma seperated emails. E.g.: name1@examplex.com,name2@exampley.com',
-					),
-
-				),
-				'buttons' => array(
-					'invite' => array(
-						'tags' => 'name="invite"',
-						'label' => 'Invite my Friends',
-					),
+		$qa_content['form_profile']=array(
+			'title' => 'Invite your friends',
+			'tags' => 'ENCTYPE="multipart/form-data" method="POST" ACTION="'.qa_self_html().'" CLASS="pp-invite-friends"',
+			'style' => 'wide',
+			'fields' => array(
+				'emails' => array(
+					'label' => 'Friend\'s Emails:',
+					'tags' => 'name="emails"',
+					'type' => 'text',
+					'note' => 'Enter comma seperated emails. E.g.: name1@examplex.com,name2@exampley.com',
 				),
 
-				'hidden' => array(
-					'invitefriends' => '1',
+			),
+			'buttons' => array(
+				'invite' => array(
+					'tags' => 'name="invite"',
+					'label' => 'Invite my Friends',
 				),
+			),
 
-			);
-		}
+			'hidden' => array(
+				'invitefriends' => '1',
+			),
+
+		);
 		if (qa_clicked('invitefriends')){
+			
 			unset($qa_content['form_profile']);
 			$qa_content['form_profile']=array(
 				'title' => 'Invite your friends',
