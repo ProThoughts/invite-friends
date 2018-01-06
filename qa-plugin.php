@@ -9,7 +9,7 @@
 	Plugin Author: Publicity Port
 	Plugin Author URI: https://publicityport.com
 	Plugin License: GPLv2
-	Plugin Minimum Question2Answer Version: 1.6.3
+	Plugin Minimum Question2Answer Version: 1.7.5
 	Plugin Minimum PHP Version: 5
 	Plugin Update Check URI: https://raw.githubusercontent.com/PublicityPort/invite-friends/master/qa-plugin.php
 */
@@ -23,8 +23,9 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 	exit;
 }
 
-qa_register_plugin_module('page', 'qa-invite-friends-index.php', 'qa_invite_friends_index_page', 'Invite Friends');
-qa_register_plugin_layer('qa-invite-friends-layer-index.php', 'Invite Friends home');
+qa_register_plugin_module('page', 'qa-invite-friends-index.php', 'qa_invite_friends_index_page', 'Invite Friends Plugin page');
+qa_register_plugin_module('module', 'qa-invite-friends-admin.php', 'qa_invite_friends_admin', 'Invite Friends plugin settings');
+qa_register_plugin_layer('qa-invite-friends-layer-index.php', 'Invite Friends layer override');
 
 /*
 	Omit PHP closing tag to help avoid accidental output

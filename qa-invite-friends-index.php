@@ -29,8 +29,6 @@ class qa_invite_friends_index_page {
 
 		$qa_content = qa_content_prepare();
 		
-		file_put_contents('out.log', var_export($qa_content, true),FILE_APPEND);
-
 		if (!isset($_POST["submit"])){
 			$qa_content['form_profile']=array(
 				'title' => 'Invite your friends',
