@@ -15,7 +15,9 @@ class qa_invite_friends_index_page {
 	}
 	
 	function process_request($request) {
-        require_once $this->directory . 'qa-invite-friends-util.php';
+		require_once $this->directory . 'qa-invite-friends-util.php';
+		
+		
 
 		//	Check we're not using single-sign on integration, that we're logged in
 		$userid = qa_get_logged_in_userid();
@@ -25,33 +27,53 @@ class qa_invite_friends_index_page {
         
         $useraccount = qa_db_user_find_by_id__open($userid);
 
-        $qa_content = qa_content_prepare();
+		$qa_content = qa_content_prepare();
+		
+		file_put_contents('out.log', var_export($qa_content, true),FILE_APPEND);
 
-        $qa_content['form_profile']=array(
-			'title' => '',
-			'tags' => 'ENCTYPE="multipart/form-data" METHOD="POST" ACTION="'.qa_self_html().'" CLASS="publicityport-login-profile"',
-			'style' => 'wide',
-			'fields' => array(
-				'handle' => array(
-					'label' => qa_lang_html('users/handle_label'),
-					'value' => qa_html($useraccount['handle']),
-					'type' => 'static',
+		if (!isset($_POST["submit"])){
+			$qa_content['form_profile']=array(
+				'title' => 'Invite your friends',
+				'tags' => 'ENCTYPE="multipart/form-data" method="POST" ACTION="'.qa_self_html().'" CLASS="pp-invite-friends"',
+				'style' => 'wide',
+				'fields' => array(
+					'emails' => array(
+						'label' => 'Friend\'s Emails:',
+						'tags' => 'name="emails"',
+						'type' => 'text',
+						'note' => 'Enter comma seperated emails. E.g.: name1@examplex.com,name2@exampley.com',
+					),
+
 				),
-				
-				'email' => array(
-					'label' => qa_lang_html('users/email_label'),
-					'value' => qa_html($useraccount['email']),
-					'type' => 'static',
+				'buttons' => array(
+					'invite' => array(
+						'tags' => 'name="invite"',
+						'label' => 'Invite my Friends',
+					),
 				),
-			),
-			
-			'hidden' => array(
-				'dosaveprofile' => '0'
-			),
 
-		);
+				'hidden' => array(
+					'invitefriends' => '1',
+				),
 
-        //file_put_contents('out.log', var_export($useraccount['handle'], true),FILE_APPEND);
+			);
+		}
+		if (qa_clicked('invitefriends')){
+			unset($qa_content['form_profile']);
+			$qa_content['form_profile']=array(
+				'title' => 'Invite your friends',
+				'fields' => array(
+					'thankyou' => array(
+						'label' => 'All your friends are invited.',
+						'type' => 'static',
+						'note' => 'Thank you. Emails: ' . qa_post_text('emails'),
+					),
+	
+				),
+	
+			);
+		}
+
         $qa_content['navigation']['sub'] = qa_user_sub_navigation($useraccount['handle'], '', true);
 		return $qa_content;
 
